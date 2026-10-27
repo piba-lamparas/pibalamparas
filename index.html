@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Piba | Luminaria 3D</title>
-  <meta name="description" content="Lámparas de diseño impresas en 3D. Hechas a medida, livianas y con luz cálida o de color.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Piba | Lámparas impresas en 3D</title>
+  <meta name="description" content="Lámparas de diseño impresas en 3D. Livianas y con luz cálida o de color.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,6 +37,13 @@
     nav ul { display: flex; gap: 28px; list-style: none; font-size: .93rem; color: var(--muted); }
     nav ul a:hover { color: var(--ink); }
     .cta-sm { background: var(--ink); color: #111; padding: 9px 18px; border-radius: 999px; font-size: .9rem; font-weight: 500; }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .burger { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: rgba(255,255,255,.04); cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+    .burger span { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .3s, opacity .3s; }
+    .burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+    .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* Hero */
     .hero { padding: 70px 0 90px; }
@@ -104,13 +112,15 @@
     .step h3 { font-size: 1.1rem; margin-bottom: 6px; }
     .step p { color: var(--muted); font-size: .92rem; }
 
-    /* A medida */
-    .custom { background: var(--bg2); border-block: 1px solid var(--line); }
-    .custom .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-    .feats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .feat { border: 1px solid var(--line); border-radius: 18px; padding: 20px; background: rgba(255,255,255,.03); }
-    .feat strong { display: block; font-size: 1.5rem; color: var(--glow); transition: color .6s; }
-    .feat span { color: var(--muted); font-size: .88rem; }
+    /* Personalizá tu lámpara */
+    .custom .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: 40px; align-items: center; }
+    .custom .sub { margin-bottom: 28px; }
+    .feats { display: grid; gap: 14px; }
+    .feat { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; background: var(--bg2); display: flex; align-items: baseline; gap: 14px; }
+    .feat strong { font-size: 1.5rem; color: var(--glow); min-width: 96px; transition: color .6s; }
+    .feat span { color: var(--muted); font-size: .95rem; }
+
+    :focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; }
 
     /* FAQ */
     details { border-bottom: 1px solid var(--line); padding: 20px 0; }
@@ -131,12 +141,56 @@
     .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s, transform .7s; }
     .reveal.in { opacity: 1; transform: none; }
 
+    /* Tablet y celular */
     @media (max-width: 800px) {
-      nav ul { display: none; }
-      .hero .wrap, .custom .wrap { grid-template-columns: 1fr; }
-      .stage { height: 400px; }
-      .halo { width: 320px; height: 320px; }
-      section { padding: 70px 0; }
+      .wrap { padding: 0 18px; }
+      nav { height: 62px; }
+      .burger { display: flex; }
+      nav ul { display: none; position: absolute; top: 62px; left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px 18px 18px; background: rgba(11,11,16,.97); border-bottom: 1px solid var(--line); font-size: 1.05rem; }
+      nav ul.open { display: flex; }
+      nav ul li a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); }
+      nav ul li:last-child a { border-bottom: 0; }
+
+      .hero { padding: 36px 0 56px; }
+      .hero .wrap, .custom .wrap { grid-template-columns: 1fr; gap: 28px; }
+      .hero .lead { max-width: none; }
+      .stage { height: 380px; order: -1; }
+      .halo { width: 300px; height: 300px; bottom: 50px; }
+      .floor { width: 240px; }
+      .picker { flex-wrap: wrap; }
+      .dot { width: 36px; height: 36px; }
+
+      section { padding: 64px 0; }
+      .sub { margin-bottom: 32px; }
+      .thumb { height: 200px; }
+      .contact .box { padding: 48px 20px; border-radius: 26px; }
+    }
+
+    @media (max-width: 480px) {
+      .logo { font-size: 1.15rem; }
+      .cta-sm { padding: 9px 14px; font-size: .85rem; }
+      .tag { font-size: .76rem; padding: 6px 12px; }
+      .stage { height: 330px; }
+      .halo { width: 260px; height: 260px; }
+      .lamp .foot { width: 120px; }
+      #heroLamp { transform-origin: bottom center; scale: .85; }
+      .btns { flex-direction: column; }
+      .btns .btn { width: 100%; text-align: center; padding: 16px 24px; }
+      .grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .step { padding: 22px; }
+      .feat { flex-direction: column; gap: 4px; padding: 18px 20px; }
+      .feat strong { min-width: 0; }
+      summary { font-size: 1rem; gap: 14px; }
+      .buy { padding: 11px 18px; }
+      footer { padding: 28px 18px calc(28px + env(safe-area-inset-bottom)); }
+    }
+
+    /* En pantallas táctiles no hay hover: evitamos efectos que se quedan "pegados" */
+    @media (hover: none) {
+      .card:hover { transform: none; border-color: var(--line); }
+      .btn.primary:hover { transform: none; }
+      .dot:hover { transform: none; }
     }
     @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
   </style>
@@ -146,14 +200,17 @@
   <header>
     <div class="wrap">
       <nav>
-        <a href="#inicio" class="logo">Lumina<b>3D</b></a>
-        <ul>
+        <a href="#inicio" class="logo">Piba<b>3D</b></a>
+        <ul id="menu">
           <li><a href="#productos">Colección</a></li>
           <li><a href="#proceso">Proceso</a></li>
-          <li><a href="#medida">A medida</a></li>
+          <li><a href="#medida">Personalizar</a></li>
           <li><a href="#faq">Preguntas</a></li>
         </ul>
-        <a class="cta-sm" href="#contacto">Pedir la mía</a>
+        <div class="nav-right">
+          <a class="cta-sm" href="#contacto">Pedir la mía</a>
+          <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+        </div>
       </nav>
     </div>
   </header>
@@ -165,10 +222,10 @@
         <div>
           <div class="tag"><i></i> Impresas en 3D · Hechas en Argentina</div>
           <h1>Luz con <span>forma propia</span></h1>
-          <p class="lead">Lámparas de diseño impresas capa por capa. Livianas, únicas y fabricadas a pedido, en el color que vos elijas.</p>
+          <p class="lead">Lámparas impresas capa por capa. Livianas, fabricadas a pedido y en el color que vos elijas.</p>
           <div class="btns">
             <a href="#productos" class="btn primary">Ver colección</a>
-            <a href="#medida" class="btn ghost">Diseño a medida</a>
+            <a href="#medida" class="btn ghost">Personalizá la tuya</a>
           </div>
           <div class="picker">
             <span>Probá la luz:</span>
@@ -191,8 +248,8 @@
 
     <div class="strip" aria-hidden="true">
       <div>
-        <span>PLA </span><span>Hechas a pedido</span><span>Luz LED cálida o RGB</span><span>Envíos a todo el país</span><span>Livianas y resistentes</span>
-        <span>PLA </span><span>Hechas a pedido</span><span>Luz LED cálida o RGB</span><span>Envíos a todo el país</span><span>Livianas y resistentes</span>
+        <span>PLA biodegradable</span><span>Hechas a pedido</span><span>Luz LED cálida o RGB</span><span>Envíos a todo el país</span><span>Colores a elección</span><span>Livianas y resistentes</span>
+        <span>PLA biodegradable</span><span>Hechas a pedido</span><span>Luz LED cálida o RGB</span><span>Envíos a todo el país</span><span>Colores a elección</span><span>Livianas y resistentes</span>
       </div>
     </div>
 
@@ -234,7 +291,7 @@
         <h2 class="title reveal">De un archivo a tu mesa</h2>
         <p class="sub reveal">Así nace cada lámpara.</p>
         <div class="steps">
-          <div class="step reveal"><h3>Diseño</h3><p>Modelamos la pieza en 3D pensando en cómo se va a ver la luz.</p></div>
+          <div class="step reveal"><h3>Elegís</h3><p>Elegís el modelo, el color, el tamaño y el tipo de luz que más te guste.</p></div>
           <div class="step reveal"><h3>Impresión</h3><p>Se imprime capa por capa en PLA, entre 8 y 20 horas según el tamaño.</p></div>
           <div class="step reveal"><h3>Armado</h3><p>Pulimos, instalamos el LED y el cable, y probamos que todo funcione.</p></div>
           <div class="step reveal"><h3>Envío</h3><p>Embalaje reforzado y envío a todo el país.</p></div>
@@ -242,20 +299,20 @@
       </div>
     </section>
 
-    <!-- A MEDIDA -->
+    <!-- PERSONALIZAR -->
     <section class="custom" id="medida">
       <div class="wrap">
         <div>
-          <p class="eyebrow reveal">A medida</p>
-          <h2 class="title reveal">¿Tenés una idea? La imprimimos</h2>
-          <p class="sub reveal" style="margin-bottom:26px">Podemos hacer tu lámpara con el diseño, el tamaño y el color que quieras: un logo, un personaje, una forma especial para un regalo.</p>
-          <a href="#contacto" class="btn primary reveal">Contanos tu idea</a>
+          <p class="eyebrow reveal">Personalizá</p>
+          <h2 class="title reveal">Hacela a tu gusto</h2>
+          <p class="sub reveal">Elegí el color de la pieza, el tamaño y el tipo de luz. Nosotros la imprimimos y la armamos para vos.</p>
+          <a href="#contacto" class="btn primary reveal">Contanos cómo la querés</a>
         </div>
         <div class="feats">
-          <div class="feat reveal"><strong>100%</strong><span>personalizable</span></div>
-          <div class="feat reveal"><strong>PLA</strong></div>
-          <div class="feat reveal"><strong>LED</strong><span>bajo consumo</span></div>
-          <div class="feat reveal"><strong>3–5</strong><span>días de producción</span></div>
+          <div class="feat reveal"><strong>Color</strong><span>varios colores de filamento PLA</span></div>
+          <div class="feat reveal"><strong>Tamaño</strong><span>consultanos las medidas disponibles</span></div>
+          <div class="feat reveal"><strong>Luz</strong><span>LED cálida o RGB con control remoto</span></div>
+          <div class="feat reveal"><strong>3–5 días</strong><span>de producción</span></div>
         </div>
       </div>
     </section>
@@ -265,8 +322,9 @@
       <div class="wrap" style="max-width:780px">
         <p class="eyebrow reveal">Preguntas</p>
         <h2 class="title reveal">Lo que más nos preguntan</h2>
-        <details class="reveal"><summary>¿De qué material son?</summary><p>De PLA, un plástico de origen vegetal, liviano y resistente para uso en interiores.</p></details>
+        <details class="reveal"><summary>¿De qué material son?</summary><p>De PLA, un plástico liviano y resistente para uso en interiores.</p></details>
         <details class="reveal"><summary>¿Se puede elegir el color?</summary><p>Sí, tenemos varios colores de filamento. Además, la luz puede ser cálida o RGB con control remoto.</p></details>
+        <details class="reveal"><summary>¿Se puede elegir el tamaño?</summary><p>Sí, escribinos por WhatsApp y te contamos qué medidas hay disponibles para cada modelo.</p></details>
         <details class="reveal"><summary>¿Se calienta?</summary><p>Usamos luz LED de bajo consumo, que casi no genera calor, así que es seguro para el material.</p></details>
         <details class="reveal"><summary>¿Hacen envíos?</summary><p>Sí, enviamos a todo el país. Coordinamos el costo y el tiempo por WhatsApp.</p></details>
         <details class="reveal"><summary>¿Cuánto tardan?</summary><p>Entre 3 y 5 días de producción, más el tiempo de envío.</p></details>
@@ -279,10 +337,9 @@
         <div class="box reveal">
           <p class="eyebrow">Contacto</p>
           <h2 class="title">Encendamos tu espacio</h2>
-          <p class="sub">Escribinos y te ayudamos a elegir o a diseñar tu lámpara.</p>
-          <!-- Cambiá el número (con código de país, sin + ni espacios) -->
+          <p class="sub">Escribinos y te ayudamos a elegir y personalizar tu lámpara.</p>
           <div class="btns">
-            <a class="btn primary" href="https://wa.me/5492644367617?text=Hola!%20Quiero%20consultar%20por%20una%20lámpara%203D" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+            <a class="btn primary" href="https://wa.me/5492644367617?text=Hola!%20Quiero%20consultar%20por%20una%20l%C3%A1mpara%203D" target="_blank" rel="noopener">Escribir por WhatsApp</a>
             <a class="btn ghost" href="https://instagram.com/somos.piba" target="_blank" rel="noopener">Instagram</a>
           </div>
         </div>
@@ -335,6 +392,18 @@
       document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
       b.classList.add('active');
     });
+
+    // Menú del celular
+    const burger = document.getElementById('burger');
+    const menu = document.getElementById('menu');
+    function toggleMenu(open) {
+      menu.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open);
+      burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    }
+    burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('open')));
+    menu.addEventListener('click', e => { if (e.target.closest('a')) toggleMenu(false); });
+    window.addEventListener('resize', () => { if (innerWidth > 800) toggleMenu(false); });
 
     // Animación al hacer scroll
     const io = new IntersectionObserver(es => es.forEach(e => {
